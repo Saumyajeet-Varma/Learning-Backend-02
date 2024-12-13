@@ -10,6 +10,11 @@ const asyncHandler = (fn) => (req, res, next) => {
 
 export default asyncHandler
 
+
+
+
+
+
 /*
 
 // Wrapping fn in try-catch block

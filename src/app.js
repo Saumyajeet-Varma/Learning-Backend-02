@@ -10,18 +10,18 @@ app.use(cors({
     credentials: true,
 }));
 
-// json configuration
+// middleware used for parsing incoming requests with JSON payload
 app.use(express.json({
     limit: "16kb"
 }));
 
-// url configuration
+// use the urlencoded middleware to parse incoming requests with urlencoded payloads
 app.use(express.urlencoded({
     limit: "16kb",
     extended: true,
 }));
 
-// upload configuration
+// serve static files from public folder
 app.use(express.static("public"));
 
 // cookie-parser configuration
