@@ -1,11 +1,13 @@
 // Utility function to wrap a function in Promise or try-catch block
 
 // Wrapping fn in Promise
-const asyncHandler = (fn) => (req, res, next) => {
+const asyncHandler = (fn) => {
 
-    Promise
-        .resolve(fn(req, res, next))
-        .catch((err) => next(err));
+    return (req, res, next) => {
+        Promise
+            .resolve(fn(req, res, next))
+            .catch((err) => next(err));
+    }
 }
 
 export default asyncHandler
