@@ -18,29 +18,32 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // 01 - Get user details from frontend
     const { username, email, fullName, password } = req.body;
-    console.log("Email: ", email);
 
     // 02 - Validation, no empty input section which is required
-    if ([username, email, fullName, password].some((field) => field?.trim() === "")) {
+    if ([username, email, fullName, password].some(field => field?.trim() === "")) {
         throw new ApiError(400, "All fields are required");
     }
 
-    if (!email.include("@")) {
-        throw new ApiError(400, "Enter valid email");
-    }
+    // if (!email.includes("@")) {
+    //     throw new ApiError(400, "Enter valid email");
+    // }
 
     // 03 - Check if user already exist
-    const userExist = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
 
-    if (userExist) {
-        throw new ApiError(409, "User with email or username already exist")
+    if (existedUser) {
+        throw new ApiError(409, "User with email or username already exists")
     }
 
     // 04 - Check for image and avatar*
     const avatarLocalPath = req.files?.avatar[0]?.path // files are provided by multer
-    const coverImageLocalPath = req.files?.coverImage[0]?.path // files are provided by multer
+
+    let coverImageLocalPath;
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+        coverImageLocalPath = req.files.coverImage[0].path;
+    }
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required");
@@ -65,19 +68,19 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     // 07 - Check for user creation
-    const userCreated = await User.findById(user._id);
+    // 08 - Remove password and refresh token field from response
+    const userCreated = await User.findById(user._id).select("-password -refreshToken");
 
     if (!userCreated) {
         throw new ApiError(500, "Something went wrong while registering user");
     }
 
-    // 08 - Remove password and refresh token field from response
-    const resData = userCreated.select("-password -refreshToken")
-
     // 09 - return response
     return res.status(201).json(
-        new ApiResponse(200, "User registered successfully", resData)
+        new ApiResponse(200, "User registered successfully", userCreated)
     )
+
+
 });
 
 export default registerUser
@@ -99,19 +102,25 @@ if (!username || !email || !fullName || !password) {
 */
 
 /*
- 
-// 07 - Check for user creation
-// 08 - Remove password and refresh token field from response
-// 09 - return response
 
-const userCreated = await User.findById(user._id).select("-password -refreshToken");
+// There is some error in this code (select is not a function for userCreated)  
+
+// 07 - Check for user creation
+const userCreated = await User.findById(user._id);
 
 if (!userCreated) {
     throw new ApiError(500, "Something went wrong while registering user");
 }
 
-return userCreated.status(201).json(
-    new ApiResponse(200, "User registered successfully", resData)
-)
+// 08 - Remove password and refresh token field from response
+const resData = userCreated.select("-password -refreshToken")
+
+*/
+
+/*
+
+// if coverImageLocalPath is undefined then it is showing error, because we are not checking for req.files.coverImage, and directly accessing req.files.coverImage[0]
+
+const coverImageLocalPath = req.files?.coverImage[0]?.path 
 
 */

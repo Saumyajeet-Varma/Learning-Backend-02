@@ -6,7 +6,7 @@ const userRouter = Router();
 
 // http://localhost:8000/api/v1/user/register
 userRouter.route("/register").post(
-    upload.fields(
+    upload.fields([
         {
             name: "avatar", // This should be same in Frontend (name of the input)
             maxCount: 1,
@@ -15,7 +15,7 @@ userRouter.route("/register").post(
             name: "coverImage", // This should be same in Frontend (name of the input)
             maxCount: 1,
         }
-    ),
+    ]),
     registerUser
 )
 
