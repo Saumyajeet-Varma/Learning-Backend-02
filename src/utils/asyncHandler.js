@@ -1,6 +1,6 @@
 // Utility function to wrap a function in Promise or try-catch block
 
-// Wrapping fn in Promise
+// ? Wrapping fn in Promise
 const asyncHandler = (fn) => {
 
     return (req, res, next) => {
@@ -19,7 +19,7 @@ export default asyncHandler
 
 /*
 
-// Wrapping fn in try-catch block
+? Wrapping fn in try-catch block
 const asyncHandler = (fn) => async (req, res, next) => {
 
     try {
