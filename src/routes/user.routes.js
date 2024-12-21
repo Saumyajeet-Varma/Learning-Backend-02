@@ -5,7 +5,7 @@ import verifyJwt from "../middlewares/auth.middleware.js"
 
 const userRouter = Router();
 
-// http://localhost:8000/api/v1/user/register
+// http://localhost:8000/api/v1/users/register
 userRouter
     .route("/register")
     .post(
@@ -22,54 +22,54 @@ userRouter
         registerUser
     );
 
-// http://localhost:8000/api/v1/user/login
+// http://localhost:8000/api/v1/users/login
 userRouter
     .route("/login")
     .post(loginUser);
 
 // * SECURED ROUTES__________________________________________________
 
-// http://localhost:8000/api/v1/user/logout
+// http://localhost:8000/api/v1/users/logout
 userRouter
     .route("/logout")
     .post(verifyJwt, logoutUser);
 
-// http://localhost:8000/api/v1/user/refresh-token
+// http://localhost:8000/api/v1/users/refresh-token
 userRouter
     .route("/refresh-token")
     .post(refreshAccessToken);
 
-// http://localhost:8000/api/v1/user/change-password
+// http://localhost:8000/api/v1/users/change-password
 userRouter
     .route("/change-password")
     .post(verifyJwt, changePassword);
 
-// http://localhost:8000/api/v1/user/current-user
+// http://localhost:8000/api/v1/users/current-user
 userRouter
     .route("/current-user")
     .get(verifyJwt, getCurrentUser);
 
-// http://localhost:8000/api/v1/user/update-account
+// http://localhost:8000/api/v1/users/update-account
 userRouter
     .route("/update-account")
     .patch(updateAccountDetails);
 
-// http://localhost:8000/api/v1/user/avatar
+// http://localhost:8000/api/v1/users/avatar
 userRouter
     .route("/avatar")
     .patch(verifyJwt, upload.single("avatar"), updateUserAvatar);
 
-// http://localhost:8000/api/v1/user/cover-image
+// http://localhost:8000/api/v1/users/cover-image
 userRouter
     .route("/cover-image")
     .patch(verifyJwt, upload.single("coverImage"), updateUserCoverImage);
 
-// http://localhost:8000/api/v1/user/channel/:username  // ! ':' is imp (req.params)
+// http://localhost:8000/api/v1/users/channel/:username  // ! ':' is imp (req.params)
 userRouter
     .route("/channel/:username")
     .get(verifyJwt, getUserChannelProfile);
 
-// http://localhost:8000/api/v1/user/history
+// http://localhost:8000/api/v1/users/history
 userRouter
     .route("/history")
     .get(verifyJwt, getWatchHistory);
