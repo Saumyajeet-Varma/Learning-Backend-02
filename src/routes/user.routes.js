@@ -20,58 +20,58 @@ userRouter
             }
         ]),
         registerUser
-    )
+    );
 
 // http://localhost:8000/api/v1/user/login
 userRouter
     .route("/login")
-    .post(loginUser)
+    .post(loginUser);
 
-// SECURED ROUTE__________________________________________________
+// * SECURED ROUTES__________________________________________________
 
 // http://localhost:8000/api/v1/user/logout
 userRouter
     .route("/logout")
-    .post(verifyJwt, logoutUser)
+    .post(verifyJwt, logoutUser);
 
 // http://localhost:8000/api/v1/user/refresh-token
 userRouter
     .route("/refresh-token")
-    .post(refreshAccessToken)
+    .post(refreshAccessToken);
 
 // http://localhost:8000/api/v1/user/change-password
 userRouter
     .route("/change-password")
-    .post(verifyJwt, changePassword)
+    .post(verifyJwt, changePassword);
 
 // http://localhost:8000/api/v1/user/current-user
 userRouter
     .route("/current-user")
-    .get(verifyJwt, getCurrentUser)
+    .get(verifyJwt, getCurrentUser);
 
 // http://localhost:8000/api/v1/user/update-account
 userRouter
     .route("/update-account")
-    .patch(updateAccountDetails)
+    .patch(updateAccountDetails);
 
 // http://localhost:8000/api/v1/user/avatar
 userRouter
     .route("/avatar")
-    .patch(verifyJwt, upload.single("avatar"), updateUserAvatar)
+    .patch(verifyJwt, upload.single("avatar"), updateUserAvatar);
 
 // http://localhost:8000/api/v1/user/cover-image
 userRouter
     .route("/cover-image")
-    .patch(verifyJwt, upload.single("coverImage"), updateUserCoverImage)
+    .patch(verifyJwt, upload.single("coverImage"), updateUserCoverImage);
 
-// http://localhost:8000/api/v1/user/c/:username  // ! ':' is imp (req.params)
+// http://localhost:8000/api/v1/user/channel/:username  // ! ':' is imp (req.params)
 userRouter
-    .route("/c/:username")
-    .get(verifyJwt, getUserChannelProfile)
+    .route("/channel/:username")
+    .get(verifyJwt, getUserChannelProfile);
 
 // http://localhost:8000/api/v1/user/history
 userRouter
     .route("/history")
-    .get(verifyJwt, getWatchHistory)
+    .get(verifyJwt, getWatchHistory);
 
 export default userRouter
