@@ -64,9 +64,9 @@ userRouter
     .route("/cover-image")
     .patch(verifyJwt, upload.single("coverImage"), updateUserCoverImage);
 
-// http://localhost:8000/api/v1/users/channel/:username  // ! ':' is imp (req.params)
+// http://localhost:8000/api/v1/users/channel/:username  
 userRouter
-    .route("/channel/:username")
+    .route("/channel/:username") // ? ':' is imp (req.params), for Dynamic Routing
     .get(verifyJwt, getUserChannelProfile);
 
 // http://localhost:8000/api/v1/users/history
